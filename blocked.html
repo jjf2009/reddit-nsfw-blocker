@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blocked — Reddit NSFW Lock</title>
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .panel {
+        max-width: 420px;
+        width: 100%;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        font-weight: 650;
+      }
+      .lede {
+        margin: 0 0 20px;
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .actions a.btn {
+        text-decoration: none;
+        text-align: center;
+      }
+      .reason {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel card">
+      <div class="status-pill locked" style="margin-bottom: 14px">Locked</div>
+      <h1>This page is blocked</h1>
+      <p class="lede" id="message">
+        Reddit NSFW Lock is active. Content on this page stays hidden while
+        you're locked.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://www.reddit.com/">Go to Reddit home</a>
+        <p class="muted" style="margin: 4px 0 0; font-size: 13px">
+          To request a temporary unlock, open the extension popup and choose
+          Request unlock. Re-locking is always free.
+        </p>
+      </div>
+      <p class="reason" id="reasonLine"></p>
+    </div>
+    <script>
+      (function () {
+        const params = new URLSearchParams(location.search);
+        const reason = params.get("reason") || "";
+        const messages = {
+          gated: "This subreddit is age-gated. While locked, the click-through screen doesn't open.",
+          post: "This post is marked NSFW, so the full page is redirected instead of showing a blank feed.",
+          blocklist: "This subreddit is on your custom blocklist.",
+          nsfw: "This page was redirected because NSFW content would otherwise show.",
+        };
+        if (messages[reason]) {
+          document.getElementById("message").textContent = messages[reason];
+        }
+        const line = document.getElementById("reasonLine");
+        if (reason) {
+          line.textContent = "Reason: " + reason;
+        }
+      })();
+    </script>
+  </body>
+</html>

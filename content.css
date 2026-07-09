@@ -1,0 +1,89 @@
+/**
+ * Reddit NSFW Lock — document_start CSS layer.
+ * Hides NSFW elements before first paint to prevent flash of content.
+ * Only applied when body has [data-rnswfl-blocking="1"] set by content.js,
+ * OR via the always-on selectors gated by :not([data-rnswfl-off]).
+ *
+ * Default: assume blocking ON until content.js flips data-rnswfl-off.
+ */
+
+/* ── New Reddit: shreddit-post with nsfw attribute ─────────────── */
+html:not([data-rnswfl-off]) shreddit-post[nsfw],
+html:not([data-rnswfl-off]) shreddit-post[nsfw=""],
+html:not([data-rnswfl-off]) shreddit-post[nsfw="true"],
+html:not([data-rnswfl-off]) shreddit-post[is-nsfw],
+html:not([data-rnswfl-off]) shreddit-post[is-nsfw="true"] {
+  visibility: hidden !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+/* Faceplate / media that marks NSFW */
+html:not([data-rnswfl-off]) [data-nsfw="true"],
+html:not([data-rnswfl-off]) [data-is-nsfw="true"] {
+  visibility: hidden !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Old Reddit: .thing.over18 */
+html:not([data-rnswfl-off]) .thing.over18 {
+  visibility: hidden !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+/* Subreddit 18+ interstitial — hide immediately so click-through never shows */
+html:not([data-rnswfl-off]) shreddit-experience-tree,
+html:not([data-rnswfl-off]) #quarantine-header,
+html:not([data-rnswfl-off]) .quarantine-notice,
+html:not([data-rnswfl-off]) .interstitial.quarantine,
+html:not([data-rnswfl-off]) xpromo-nsfw-blocking-modal,
+html:not([data-rnswfl-off]) [data-testid="age-gate"],
+html:not([data-rnswfl-off]) [data-testid="nsfw-interstitial"] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Placeholder injected by content.js — always visible when present */
+.rnswfl-placeholder {
+  visibility: visible !important;
+  max-height: none !important;
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a2a2e;
+  background: #1a1a1e;
+  color: #c8c8cc;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.rnswfl-placeholder::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b8f71;
+  flex-shrink: 0;
+}
+
+/* When blocking is off, undo CSS hide rules via attribute on html */
+html[data-rnswfl-off] .rnswfl-placeholder {
+  display: none !important;
+}

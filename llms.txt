@@ -1,0 +1,49 @@
+# Reddit NSFW Lock / Reddit NSFW Blocker
+
+> Free open-source Chrome extension that blocks NSFW content on Reddit with real unlock friction (breathing + 10-minute cooldown). Local-only, no telemetry. Self-control commitment device — not parental monitoring.
+
+## Primary URL
+
+- GitHub: https://github.com/jjf2009/reddit-nsfw-blocker
+- README: https://github.com/jjf2009/reddit-nsfw-blocker#readme
+
+## What it is
+
+Reddit NSFW Lock (also searched as "reddit nsfw blocker", "block nsfw reddit chrome") is a Manifest V3 Chromium extension. It hides NSFW posts, redirects age-gated subreddits and NSFW permalinks, supports a custom subreddit blocklist, and requires a deliberate multi-step unlock before a temporary open window. Re-locking is always instant.
+
+## Who it is for
+
+People who want to block adult content on Reddit in the browser and need more than Reddit's one-click NSFW preference. Personal, self-installed use only.
+
+## Who it is not for
+
+- Monitoring a partner or child without their consent
+- Blocking the Reddit mobile app
+- Guaranteed prevention of determined bypass (other browsers, uninstall without policy)
+
+## Key facts
+
+- Price: Free (MIT)
+- Platform: Chrome, Edge, Brave, Opera (Chromium MV3)
+- Network: None at runtime
+- Permissions: storage, alarms, *.reddit.com
+- Default unlock cooldown: 10 minutes
+- Default unlocked window: 30 minutes
+
+## Install (summary)
+
+1. Clone or download the GitHub repo
+2. chrome://extensions → Developer mode → Load unpacked
+3. Select folder containing manifest.json
+4. Complete onboarding reminder note
+
+## Docs
+
+- Full README: ./README.md
+- Install how-to: ./docs/how-to-block-nsfw-on-reddit-chrome.md
+- Uninstall hardening (policy, not code): ./HARDENING.md
+- Design / agent spec: ./agent.md
+
+## Optional pricing file note
+
+Free forever for self-host / unpacked install. No SaaS tier.

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reddit NSFW Lock</title>
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="popup">
+      <header class="popup-header">
+        <div>
+          <div class="brand">Reddit NSFW Lock</div>
+          <div id="statusPill" class="status-pill locked">Locked</div>
+        </div>
+        <div class="streak-block" title="Days since last unlock">
+          <div class="streak-num" id="streakNum">0</div>
+          <div class="streak-label">day streak</div>
+        </div>
+      </header>
+
+      <section class="card meta">
+        <div class="meta-row">
+          <span class="muted">Blocked today</span>
+          <strong id="blockedToday">0</strong>
+        </div>
+        <div class="meta-row">
+          <span class="muted">Total blocked</span>
+          <strong id="blockedTotal">0</strong>
+        </div>
+        <div class="meta-row" id="timerRow" hidden>
+          <span class="muted" id="timerLabel">Time remaining</span>
+          <strong id="timerValue">—</strong>
+        </div>
+      </section>
+
+      <section class="actions" id="actions">
+        <button type="button" class="btn btn-primary" id="btnUnlock">
+          Request unlock
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnRelock" hidden>
+          Re-lock now
+        </button>
+        <p class="muted action-hint" id="actionHint">
+          Unlock takes a short breath and a ten-minute wait. Re-locking is always free.
+        </p>
+      </section>
+
+      <section class="card">
+        <label class="field-label" for="reminderNote">Your reminder</label>
+        <textarea
+          id="reminderNote"
+          rows="3"
+          placeholder="What do you want future-you to read mid-urge?"
+        ></textarea>
+        <div class="row-end">
+          <button type="button" class="btn btn-quiet" id="btnSaveNote">Save note</button>
+          <span class="muted" id="noteSaved" hidden>Saved</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <label class="field-label" for="subInput">Custom blocked subreddits</label>
+        <p class="muted sub-hint">
+          Fully blocked even when not tagged NSFW. One name per line (without r/).
+        </p>
+        <textarea id="subInput" rows="3" placeholder="e.g.&#10;example&#10;another"></textarea>
+        <div class="row-end">
+          <button type="button" class="btn btn-quiet" id="btnSaveSubs">Save list</button>
+          <span class="muted" id="subsSaved" hidden>Saved</span>
+        </div>
+      </section>
+
+      <footer class="popup-footer muted">
+        <p>
+          Real defense is the wait, not a lock you can't remove. For stronger
+          browser-level protection, see
+          <a href="HARDENING.md" id="hardeningLink" target="_blank">HARDENING.md</a>.
+        </p>
+        <p class="limits">
+          Browser only — does nothing for the Reddit app. Determined bypasses
+          (other browser, incognito without the extension) still work; this is
+          for impulsive moments, not adversarial lock-down.
+        </p>
+      </footer>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

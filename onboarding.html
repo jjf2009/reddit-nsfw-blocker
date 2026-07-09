@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome — Reddit NSFW Lock</title>
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="onboarding.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <p class="eyebrow">Reddit NSFW Lock</p>
+      <h1 class="title">A lock that waits with you</h1>
+
+      <div class="prose">
+        <p>
+          Reddit's own NSFW toggle is a preference. One click and it's back. This
+          extension is different: content is actually hidden, and opening it
+          again means riding out the urge first.
+        </p>
+        <p>
+          Unlocking always takes a short breath and a ten-minute wait. Re-locking
+          is always free and instant. That asymmetry is the whole design.
+        </p>
+        <p class="muted">
+          Cravings peak and pass. The wait is not a punishment — it's space for
+          that to happen. There is no shame messaging when a window ends; it
+          just quietly returns to locked.
+        </p>
+      </div>
+
+      <section class="card note-section">
+        <label class="field-label" for="note">
+          Write a note for future-you (mid-urge)
+        </label>
+        <p class="muted note-hint">
+          In your own words. You'll see this again during unlock — not stock
+          motivational text.
+        </p>
+        <textarea
+          id="note"
+          rows="5"
+          placeholder="e.g. Remember why you installed this. One urge is not the whole day."
+        ></textarea>
+      </section>
+
+      <div class="limits card">
+        <p class="heading">What this does not do</p>
+        <ul class="muted">
+          <li>Does nothing for the Reddit mobile app.</li>
+          <li>
+            Cannot stop you from removing the extension — Chrome doesn't allow
+            that. Real friction is the wait; optional browser policy steps are in
+            HARDENING.md.
+          </li>
+          <li>
+            A determined bypass (other browser, DevTools, etc.) still works. This
+            is for impulsive moments, not an adversarial lock.
+          </li>
+        </ul>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="btnDone">
+        Save and start locked
+      </button>
+    </main>
+    <script src="onboarding.js"></script>
+  </body>
+</html>

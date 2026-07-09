@@ -1,0 +1,101 @@
+body {
+  width: 340px;
+  min-height: 200px;
+}
+
+.popup {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.streak-block {
+  text-align: right;
+  min-width: 64px;
+}
+
+.streak-num {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.streak-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actions .btn {
+  width: 100%;
+}
+
+.action-hint {
+  margin: 0;
+  text-align: center;
+}
+
+.row-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.sub-hint {
+  margin: 0 0 8px;
+}
+
+.popup-footer {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.popup-footer p {
+  margin: 0 0 8px;
+}
+
+.popup-footer .limits {
+  opacity: 0.85;
+}
+
+.popup-footer a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

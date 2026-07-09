@@ -1,0 +1,121 @@
+body {
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.lede {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.breath-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 0 24px;
+}
+
+.breath-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #8fb896, var(--accent) 55%, #3d5c44);
+  box-shadow: 0 0 40px rgba(107, 143, 113, 0.25);
+  transform: scale(0.55);
+  transition: transform 4s ease-in-out;
+  will-change: transform;
+}
+
+.breath-circle.exhale {
+  transition-duration: 6s;
+  transform: scale(0.55);
+}
+
+.breath-circle.inhale {
+  transition-duration: 4s;
+  transform: scale(1);
+}
+
+.breath-label {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.breath-count {
+  font-size: 13px;
+}
+
+.reminder-card {
+  margin: 8px 0 16px;
+  padding: 20px 22px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-elevated);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 16px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  color: var(--text);
+}
+
+.timer-display {
+  font-variant-numeric: tabular-nums;
+  font-size: 56px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-align: center;
+  padding: 24px 0 8px;
+}
+
+.timer-display.small {
+  font-size: 40px;
+}
+
+.done-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.done-actions .btn,
+#btnContinueCooldown,
+#btnCloseTab,
+#btnStart {
+  width: 100%;
+}

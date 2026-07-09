@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unlock — Reddit NSFW Lock</title>
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="unblock.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <!-- Step: breathing -->
+      <section id="stepBreath" class="step">
+        <p class="eyebrow">Step 1 of 3</p>
+        <h1 class="title">Breathe with this for a minute</h1>
+        <p class="lede muted">
+          Not a test. Just space. Inhale as it grows, exhale as it settles.
+        </p>
+        <div class="breath-wrap">
+          <div id="breathCircle" class="breath-circle" aria-hidden="true"></div>
+          <div id="breathLabel" class="breath-label">Inhale</div>
+          <div id="breathCount" class="breath-count muted">Cycle 1 of 5</div>
+        </div>
+      </section>
+
+      <!-- Step: reminder -->
+      <section id="stepReminder" class="step" hidden>
+        <p class="eyebrow">Step 2 of 3</p>
+        <h1 class="title">A note from earlier you</h1>
+        <p class="lede muted">Read it once, slowly. No need to type anything.</p>
+        <blockquote id="reminderText" class="reminder-card">
+          <!-- filled by JS -->
+        </blockquote>
+        <button type="button" class="btn btn-primary" id="btnContinueCooldown">
+          Continue to the wait
+        </button>
+      </section>
+
+      <!-- Step: cooldown -->
+      <section id="stepCooldown" class="step" hidden>
+        <p class="eyebrow">Step 3 of 3</p>
+        <h1 class="title">Ten minutes</h1>
+        <p class="lede" id="cooldownCopy">
+          This will peak and pass, same as always. Ten minutes, that's it.
+        </p>
+        <div class="timer-display" id="cooldownTimer">10:00</div>
+        <p class="muted">
+          You can close this tab. The timer keeps running in the background and
+          unlocks when it reaches zero.
+        </p>
+        <button type="button" class="btn btn-ghost" id="btnCloseTab">
+          Close this tab
+        </button>
+      </section>
+
+      <!-- Done / unlocked -->
+      <section id="stepDone" class="step" hidden>
+        <p class="eyebrow">Open window</p>
+        <h1 class="title">Unlocked for a while</h1>
+        <p class="lede muted" id="doneCopy">
+          Content is available until the window ends. It will lock again on its
+          own — no action needed.
+        </p>
+        <div class="timer-display small" id="unlockTimer">30:00</div>
+        <div class="done-actions">
+          <button type="button" class="btn btn-primary" id="btnRelock">
+            Re-lock now
+          </button>
+          <button type="button" class="btn btn-ghost" id="btnDoneClose">
+            Close this tab
+          </button>
+        </div>
+      </section>
+
+      <!-- Already locked idle -->
+      <section id="stepIdle" class="step" hidden>
+        <p class="eyebrow">Locked</p>
+        <h1 class="title">Nothing pending</h1>
+        <p class="lede muted">
+          Start from the extension popup if you want to request an unlock.
+        </p>
+        <button type="button" class="btn btn-primary" id="btnStart">
+          Begin unlock flow
+        </button>
+      </section>
+    </main>
+    <script src="unblock.js"></script>
+  </body>
+</html>
