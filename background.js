@@ -42,7 +42,16 @@ function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
-async function incrementBlocked(count = 1) {
+// Serialize stat writes: several tabs can report at once, and read-modify-write
+// on chrome.storage.local loses counts when those interleave.
+let statsChain = Promise.resolve();
+
+function incrementBlocked(count = 1) {
+  statsChain = statsChain.then(() => doIncrementBlocked(count)).catch(() => {});
+  return statsChain;
+}
+
+async function doIncrementBlocked(count = 1) {
   const state = await getState();
   const today = todayKey();
   let { totalBlocked, blockedToday, lastCountDate } = state.stats || {};
@@ -93,10 +102,11 @@ async function ensureConsistentState() {
   const state = await getState();
   const now = Date.now();
 
-  // Cooldown finished while SW was asleep
+  // Cooldown finished while SW was asleep. activateUnlock anchors the window
+  // to when the cooldown hit zero, so re-check: it may already be over.
   if (state.pendingReadyAt && now >= state.pendingReadyAt && state.blockingActive) {
     await activateUnlock(state);
-    return getState();
+    return ensureConsistentState();
   }
 
   // Unlock window expired while SW was asleep
@@ -120,14 +130,18 @@ async function ensureConsistentState() {
 
 async function activateUnlock(state) {
   const now = Date.now();
-  const until = now + (state.unlockWindowMs || DEFAULTS.unlockWindowMs);
-  const history = [...(state.unblockHistory || []), now].slice(-100);
+  // The window starts when the cooldown reached zero, not when the worker
+  // noticed. Otherwise an alarm delayed by sleep, or a browser closed through
+  // the whole window, would hand out a fresh unlock on the next wake.
+  const start = state.pendingReadyAt ? Math.min(now, state.pendingReadyAt) : now;
+  const until = start + (state.unlockWindowMs || DEFAULTS.unlockWindowMs);
+  const history = [...(state.unblockHistory || []), start].slice(-100);
 
   await setState({
     blockingActive: false,
     unblockUntil: until,
     pendingReadyAt: null,
-    lastUnblockAt: now,
+    lastUnblockAt: start,
     unblockHistory: history,
   });
   await clearAlarm(ALARM_COOLDOWN);
@@ -200,6 +214,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     const state = await getState();
     if (state.pendingReadyAt && Date.now() >= state.pendingReadyAt - 1000) {
       await activateUnlock(state);
+      await ensureConsistentState();
     }
   } else if (alarm.name === ALARM_RELOCK) {
     const state = await getState();

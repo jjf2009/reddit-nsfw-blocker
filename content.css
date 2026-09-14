@@ -41,8 +41,11 @@ html:not([data-rnswfl-off]) .thing.over18 {
   pointer-events: none !important;
 }
 
-/* Subreddit 18+ interstitial — hide immediately so click-through never shows */
-html:not([data-rnswfl-off]) shreddit-experience-tree,
+/* Subreddit 18+ interstitial — hide immediately so click-through never shows.
+   Note: shreddit-experience-tree is deliberately NOT hidden here — it wraps
+   ordinary new-Reddit pages too. content.js handles that case with a
+   corroborated check plus a redirect. */
+html:not([data-rnswfl-off]) shreddit-forbidden,
 html:not([data-rnswfl-off]) #quarantine-header,
 html:not([data-rnswfl-off]) .quarantine-notice,
 html:not([data-rnswfl-off]) .interstitial.quarantine,

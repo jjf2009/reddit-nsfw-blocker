@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hardening — Reddit NSFW Lock</title>
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      .doc { max-width: 720px; margin: 0 auto; padding: 40px 24px 64px; }
+      .doc h1 { font-size: 24px; margin: 0 0 6px; }
+      .doc h2 { font-size: 17px; margin: 32px 0 8px; }
+      .doc p, .doc li { font-size: 15px; }
+      .doc ol, .doc ul { padding-left: 20px; }
+      .doc li { margin: 6px 0; }
+      code, pre {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 13px;
+      }
+      code { background: var(--bg-elevated); padding: 2px 5px; border-radius: 4px; }
+      pre {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        overflow-x: auto;
+      }
+      pre code { background: none; padding: 0; }
+      table { border-collapse: collapse; width: 100%; font-size: 14px; }
+      th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+      th { color: var(--text-muted); font-weight: 500; }
+      .callout {
+        border-left: 3px solid var(--warn);
+        padding: 10px 14px;
+        background: var(--bg-elevated);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        margin: 16px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc">
+      <p class="eyebrow">Reddit NSFW Lock</p>
+      <h1>Hardening against impulsive uninstall</h1>
+      <p class="muted">
+        Optional, outside the extension. Read the honest limit first.
+      </p>
+
+      <h2>The honest limit</h2>
+      <p>
+        Chrome gives extensions no API to prevent, intercept, or delay their own
+        removal. There is no permission, manifest key, or content-script trick
+        that greys out <strong>Remove</strong> on <code>chrome://extensions</code>.
+      </p>
+      <p>
+        <code>chrome.management</code> can enable or disable <em>other</em>
+        extensions, or call <code>uninstallSelf()</code> — nothing runs in the
+        reverse direction. That is deliberate: it stops malware from pinning
+        itself to a machine.
+      </p>
+      <p>
+        So this extension does not pretend to block uninstall. Its real defense
+        is the wait: breathing, your own reminder, and a ten-minute cooldown that
+        survives closed tabs. That raises the cost of an impulsive unlock. It
+        does not stop a deliberate uninstall.
+      </p>
+
+      <h2>What actually works: ExtensionInstallForcelist</h2>
+      <p>
+        Chrome's <code>ExtensionInstallForcelist</code> policy pins specific
+        extension IDs, and the browser greys out Remove and Disable for them.
+        Setup is deliberate multi-step work — which is the point, versus a
+        one-click Remove during an urge.
+      </p>
+      <div class="callout">
+        On a machine where you hold admin rights, you can reverse this later.
+        That still beats an impulsive click. A true guarantee is someone else
+        holding the admin credentials, or a managed browser profile.
+      </div>
+
+      <h2>1. Find your extension ID</h2>
+      <ol>
+        <li>Load the extension in Chrome.</li>
+        <li>Open <code>chrome://extensions</code>.</li>
+        <li>Enable <strong>Developer mode</strong>.</li>
+        <li>Copy the <strong>ID</strong> under Reddit NSFW Lock.</li>
+      </ol>
+
+      <h2>2. Windows (registry)</h2>
+      <ol>
+        <li>Open <code>regedit</code> as Administrator.</li>
+        <li>
+          Go to (create keys if missing):
+          <pre><code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist</code></pre>
+          Edge uses <code>Microsoft\Edge</code> under <code>Policies</code>.
+        </li>
+        <li>Create a string value named <code>1</code>.</li>
+        <li>
+          Set its data to:
+          <pre><code>EXTENSION_ID;https://clients2.google.com/service/update2/crx</code></pre>
+        </li>
+        <li>Restart Chrome fully, then check <code>chrome://policy</code>.</li>
+      </ol>
+      <p class="muted">
+        Force-install expects a packed extension with an update URL. For a purely
+        local unpacked build, either pack and host a CRX plus update manifest, or
+        accept the wait as the practical layer until you do.
+      </p>
+
+      <h2>3. macOS (configuration profile)</h2>
+      <p>
+        Set the <code>ExtensionInstallForcelist</code> key for preference domain
+        <code>com.google.Chrome</code> as an array of strings:
+      </p>
+      <pre><code>&lt;key&gt;ExtensionInstallForcelist&lt;/key&gt;
+&lt;array&gt;
+  &lt;string&gt;YOUR_EXTENSION_ID;https://clients2.google.com/service/update2/crx&lt;/string&gt;
+&lt;/array&gt;</code></pre>
+      <p>Install the profile, restart Chrome, verify on <code>chrome://policy</code>.</p>
+
+      <h2>4. Linux</h2>
+      <p>Write <code>/etc/opt/chrome/policies/managed/reddit_nsfw_lock.json</code>:</p>
+      <pre><code>{
+  "ExtensionInstallForcelist": [
+    "YOUR_EXTENSION_ID;https://clients2.google.com/service/update2/crx"
+  ]
+}</code></pre>
+
+      <h2>5. Middle ground, no policy</h2>
+      <ul>
+        <li>
+          Allow the extension in Incognito (extension details → Allow in
+          Incognito). Otherwise Incognito is the easiest bypass.
+        </li>
+        <li>Don't keep a spare browser around as an escape hatch.</li>
+        <li>OS-level or DNS filtering adds distance, outside this project.</li>
+      </ul>
+
+      <h2>What this project will never ship</h2>
+      <ul>
+        <li>Fake "disable protection" toggles.</li>
+        <li>Scripts claiming to block <code>chrome://extensions</code>.</li>
+        <li><code>beforeunload</code> theater pretending to stop removal.</li>
+      </ul>
+
+      <h2>Summary</h2>
+      <table>
+        <tr><th>Layer</th><th>What it does</th><th>Strength</th></tr>
+        <tr><td>The wait + your reminder</td><td>Makes impulsive unlock costly</td><td>Real, built in</td></tr>
+        <tr><td>Force-install policy</td><td>Greys out Remove and Disable</td><td>Stronger, admin setup</td></tr>
+        <tr><td>Accountability partner</td><td>Holds admin credentials</td><td>Strongest in practice</td></tr>
+      </table>
+    </main>
+  </body>
+</html>

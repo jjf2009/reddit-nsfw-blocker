@@ -148,10 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
     refresh();
   });
 
-  // HARDENING.md is not web_accessible by default for the popup; open via extension URL
+  // Open the rendered page, not the raw .md (Chrome downloads unknown types)
   $("hardeningLink").addEventListener("click", (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: chrome.runtime.getURL("HARDENING.md") });
+    chrome.tabs.create({ url: chrome.runtime.getURL("hardening.html") });
   });
 
   refresh();
