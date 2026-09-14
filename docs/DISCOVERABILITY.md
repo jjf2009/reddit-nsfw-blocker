@@ -7,17 +7,27 @@ Repo SEO alone is necessary but not sufficient. Google and GitHub both need a **
 | Asset | Purpose |
 |-------|---------|
 | Repo name `reddit-nsfw-blocker` | Exact-match URL/title for GitHub + Google |
-| README H1 + first paragraph | Primary keywords + clear definition |
-| `docs/how-to-block-nsfw-on-reddit-chrome.md` | “How to block NSFW on Reddit Chrome” intent |
-| `llms.txt` | Machine-readable summary for AI search |
-| GitHub topics (set on push) | GitHub search facets |
-| MIT LICENSE | Trust / adoption signal |
+| README title, one-line summary, "What is Reddit NSFW Lock?" | Quotable definition for search snippets and AI answers |
+| README FAQ + comparison table | Natural-language questions AI assistants surface directly |
+| `docs/alternatives.md` | "X vs Y" comparison intent |
+| `docs/how-to-block-nsfw-on-reddit-chrome.md` | "How to block NSFW on Reddit Chrome" intent |
+| `llms.txt` | Machine-readable summary, in llmstxt.org format |
+| `package.json` keywords, description, repository | Metadata for code search and package indexes |
+| CONTRIBUTING.md, CODE_OF_CONDUCT.md, MIT LICENSE, CI badge | Project maturity signals |
 
-## GitHub settings (set automatically on publish)
+## GitHub settings
 
-- **Description:** `Chrome extension Reddit NSFW blocker — hide NSFW posts with a 10-minute unlock cooldown. Local-only commitment device.`
-- **Topics:** `reddit`, `nsfw`, `chrome-extension`, `blocker`, `self-control`, `manifest-v3`, `privacy`, `content-blocker`, `reddit-nsfw`, `digital-wellbeing`
-- **Homepage:** can point at the repo README or GitHub Pages later
+- **Description:** `Free, open-source Chrome extension that blocks NSFW posts and 18+ subreddits on Reddit. Unlocking takes a 10-minute cooldown; re-locking is one click. Local-only, no tracking. Works in Chrome, Edge, Brave and other Chromium browsers.`
+- **Topics:** `reddit`, `nsfw`, `nsfw-blocker`, `reddit-nsfw`, `chrome-extension`, `browser-extension`, `manifest-v3`, `content-blocker`, `adult-content-blocker`, `self-control`, `digital-wellbeing`, `productivity`, `privacy`, `nofap`, `javascript`
+- **Homepage:** the repo README, or a GitHub Pages site if one is added
+
+Apply with:
+
+```bash
+gh repo edit jjf2009/reddit-nsfw-blocker \
+  --description "Free, open-source Chrome extension that blocks NSFW posts and 18+ subreddits on Reddit. Unlocking takes a 10-minute cooldown; re-locking is one click. Local-only, no tracking. Works in Chrome, Edge, Brave and other Chromium browsers." \
+  --add-topic nsfw-blocker,browser-extension,adult-content-blocker,productivity,nofap,javascript
+```
 
 ## After the repo is public (you should do these)
 

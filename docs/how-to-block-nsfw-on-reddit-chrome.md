@@ -1,6 +1,6 @@
 # How to Block NSFW on Reddit in Chrome (2026)
 
-**Last updated:** 2026-07-09  
+**Last updated:** 2026-09-14  
 **Tool:** [Reddit NSFW Lock](https://github.com/jjf2009/reddit-nsfw-blocker) — open-source Reddit NSFW blocker for Chrome
 
 ## TL;DR
@@ -90,5 +90,7 @@ Reddit’s setting is a preference. Mid-urge, one click restores everything. A d
 
 - Add high-risk subreddits to the custom blocklist in the popup.  
 - Read [HARDENING.md](../HARDENING.md) if you want force-install policy.  
+- Compare other options in [Reddit NSFW Lock vs alternatives](./alternatives.md).  
+- Browse the [FAQ](../README.md#faq).  
 - Star the repo so others searching for a **Reddit NSFW blocker** can find it:  
   https://github.com/jjf2009/reddit-nsfw-blocker

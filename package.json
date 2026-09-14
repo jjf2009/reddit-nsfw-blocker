@@ -1,0 +1,39 @@
+{
+  "name": "reddit-nsfw-lock",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free, open-source Chrome extension that blocks NSFW posts and 18+ subreddits on Reddit, with a 10-minute unlock cooldown. Local-only, no tracking.",
+  "keywords": [
+    "reddit",
+    "nsfw",
+    "nsfw-blocker",
+    "reddit-nsfw-blocker",
+    "chrome-extension",
+    "manifest-v3",
+    "content-blocker",
+    "adult-content-blocker",
+    "self-control",
+    "digital-wellbeing",
+    "nofap",
+    "privacy"
+  ],
+  "homepage": "https://github.com/jjf2009/reddit-nsfw-blocker#readme",
+  "bugs": {
+    "url": "https://github.com/jjf2009/reddit-nsfw-blocker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjf2009/reddit-nsfw-blocker.git"
+  },
+  "license": "MIT",
+  "author": "jjf2009",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tools/test-background.js",
+    "validate": "node tools/validate.js",
+    "check": "node tools/validate.js && node tools/test-background.js",
+    "pack": "mkdir -p dist && rm -f dist/reddit-nsfw-lock.zip && zip -qr dist/reddit-nsfw-lock.zip manifest.json background.js content.js content.css popup.html popup.js popup.css unblock.html unblock.js unblock.css onboarding.html onboarding.js onboarding.css blocked.html blocked.js hardening.html shared.css HARDENING.md LICENSE icons"
+  }
+}

@@ -1,3 +1,8 @@
+/**
+ * First-run page. Saves the user's reminder note — shown again during every
+ * unlock request — and marks onboarding complete.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
   const note = document.getElementById("note");
   const btn = document.getElementById("btnDone");
